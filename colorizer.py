@@ -16,7 +16,7 @@ from keras.regularizers import l1,l2,l1_l2
 
 K.set_image_data_format('channels_last')
 
-print 'Initializing pre-trained model..'
+print('Initializing pre-trained model..')
 pre_trained_model = VGG19()
 
 NA = 'not available'
@@ -91,7 +91,7 @@ def train(data):
     model = build_model(x_color.shape[1:])
     if PRETRAINED_MODEL_PATH != NA:
         model.load_weights(PRETRAINED_MODEL_PATH)
-        print 'Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH)
+        print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
  
     model.compile(optimizer=OPTIMIZER, loss=LOSS)
     
@@ -120,10 +120,10 @@ def predict():
     model = build_model(input_shape)
     if PRETRAINED_MODEL_PATH != NA:
         model.load_weights(PRETRAINED_MODEL_PATH)
-        print 'Loaded the model {0}.'.format(PRETRAINED_MODEL_PATH)
+        print('Loaded the model {0}.'.format(PRETRAINED_MODEL_PATH))
     else:
         model.load_weights(MODEL_PATH)
-        print 'Loaded the model {0}.'.format(MODEL_PATH)
+        print('Loaded the model {0}.'.format(MODEL_PATH))
 
     num_files = 0
     #dataset_root = '/home/go/work/research/colorization/data/Train_gray'
@@ -147,20 +147,20 @@ def predict():
             new_shp = gray_image.shape
 
             gray_patch_all = []
-            for y in xrange(0, new_shp[0], stride):
-                for x in xrange(0, new_shp[1], stride):
+            for y in range(0, new_shp[0], stride):
+                for x in range(0, new_shp[1], stride):
                     gray_patch = gray_image[y:y+patch_size,x:x+patch_size,:]
                     gray_patch = gray_patch.astype('float32') / 255.
                     gray_patch_all.append(gray_patch)
             # prediction
-            print 'Predicting..'
+            print('Predicting..')
             color_patch_all = model.predict([gray_patch_all])
-            print 'Predicted.'
+            print('Predicted.')
             # reconstruction
             ind = 0
             color_data = np.zeros(new_shp, dtype=dtype)
-            for y in xrange(0, new_shp[0], stride):
-                for x in xrange(0, new_shp[1], stride):
+            for y in range(0, new_shp[0], stride):
+                for x in range(0, new_shp[1], stride):
                     color_data[y:y+patch_size,x:x+patch_size,:] = (color_patch_all[ind] * 255.).astype(dtype)
                     ind += 1
             color_data = color_data[0:shp[0],0:shp[1],:]
@@ -274,7 +274,7 @@ def main():
     OUT_PATH = os.path.join(RUN_PATH,'out')
     LOG_PATH = os.path.join(RUN_PATH, 'log.csv')
 
-    print args
+    print(args)
 
     if not os.path.exists(RUN_PATH):
         os.makedirs(RUN_PATH)
@@ -296,7 +296,7 @@ def main():
         tic = timeit.default_timer()
         num_files = predict()
         toc = timeit.default_timer()
-        print 'Runtime per image [s] : {0}'.format((toc-tic) / (num_files*1.0))
+        print('Runtime per image [s] : {0}'.format((toc-tic) / (num_files*1.0)))
         
 if __name__ == '__main__':
     main()
