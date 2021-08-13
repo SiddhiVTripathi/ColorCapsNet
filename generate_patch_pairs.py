@@ -60,13 +60,13 @@ print("Patching...")
 for ind in df.index:
      patching(df['lr_gray'][ind], df['lr_lab'][ind],x_train_gray=x_train_gray,x_train_color=x_train_color)
 
-OUT_PATH = '{0}/../train_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
+OUT_PATH = '{../train_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
 print("Patching...")
 count_img = 0
 for ind in df_val.index:
      patching(df_val['lr_gray'][ind], df_val['lr_lab'][ind], x_train_color=x_val_color,x_train_gray=x_val_gray)
 
-OUT_PATH_val = '{0}/../val_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
+OUT_PATH_val = '../val_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
 
 x_train_gray = np.array(x_train_gray)
 x_train_color = np.array(x_train_color)
