@@ -43,6 +43,14 @@ def patching(gray_image, color_image,x_train_gray, x_train_color):
           x_train_color.append(color_patch)
           print ('Processed ' + str(count_patch) + ' / ' + str(count_img))
 
+df['lr_gray']=df['lr'].apply(color2bw)
+df_val['lr_gray']=df_val['lr'].apply(color2bw)
+df['lr_lab']=df['lr'].apply(color2lab)
+df_val['lr_lab']=df_val['lr'].apply(color2lab)
+
+PATCH_SIZE = 9 #8 #9 #128
+STRIDE = 9 #8 #9 #128
+SAMPLING = 4
 
 x_train_color,x_train_gray=[],[]
 x_val_color,x_val_gray = [],[]
