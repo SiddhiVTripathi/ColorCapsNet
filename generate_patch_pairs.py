@@ -25,7 +25,7 @@ def color2lab(x):
   return cv.cvtColor(x, cv.COLOR_BGR2LAB)
 
 def patching(gray_image, color_image,x_train_gray, x_train_color):
-  count_img = 0
+  global count_img
   count_total_patch = 0
   count_patch = 0
   count_img+=1
@@ -55,14 +55,15 @@ SAMPLING = 4
 
 x_train_color,x_train_gray=[],[]
 x_val_color,x_val_gray = [],[]
-
+count_img = 0
 print("Patching...")
 for ind in df.index:
      patching(df['lr_gray'][ind], df['lr_lab'][ind],x_train_gray=x_train_gray,x_train_color=x_train_color)
 
 OUT_PATH = '{0}/../train_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
 print("Patching...")
-for ind in df.index:
+count_img = 0
+for ind in df_val.index:
      patching(df_val['lr_gray'][ind], df_val['lr_lab'][ind], x_train_color=x_val_color,x_train_gray=x_val_gray)
 
 OUT_PATH_val = '{0}/../val_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
