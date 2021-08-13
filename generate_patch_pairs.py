@@ -14,6 +14,7 @@ df = tfds.as_dataframe(ds.take(800))
 ds_validation= tfds.load('div2k', split= 'validation')
 df_val = tfds.as_dataframe(ds_validation.take(100))
 
+print("Loading data in df...")
 df_val.drop('hr',inplace=True, axis=1)
 df.drop('hr',inplace=True, axis=1)
 
@@ -42,7 +43,7 @@ def patching(gray_image, color_image,x_train_gray, x_train_color):
           x_train_gray.append(gray_patch)
           x_train_color.append(color_patch)
           print ('Processed ' + str(count_patch) + ' / ' + str(count_img))
-
+print("Augmenting...")
 df['lr_gray']=df['lr'].apply(color2bw)
 df_val['lr_gray']=df_val['lr'].apply(color2bw)
 df['lr_lab']=df['lr'].apply(color2lab)
@@ -55,12 +56,14 @@ SAMPLING = 4
 x_train_color,x_train_gray=[],[]
 x_val_color,x_val_gray = [],[]
 
+print("Patching...")
 for ind in df.index:
      patching(df['lr_gray'][ind], df['lr_lab'][ind],x_train_gray=x_train_gray,x_train_color=x_train_color)
 
 OUT_PATH = '{0}/../train_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
+print("Patching...")
 for ind in df.index:
-     patching(df_val['lr_gray'][ind], df_val['lr_lab'][ind])
+     patching(df_val['lr_gray'][ind], df_val['lr_lab'][ind], x_train_color=x_val_color,x_train_gray=x_val_gray)
 
 OUT_PATH_val = '{0}/../val_{1}_{2}_{3}.npz'.format("",PATCH_SIZE,STRIDE,SAMPLING)
 
