@@ -6,15 +6,13 @@ import timeit
 import cv2
 import numpy as np
 from scipy.io import loadmat,savemat
-from keras import backend as K
-from keras.models import Model
-from keras.callbacks import CSVLogger,ModelCheckpoint
-from keras.applications.vgg19 import VGG19
-from keras.layers import Input, Conv2D, BatchNormalization, Activation, Dense, Reshape, Flatten
+from tensorflow.keras import backend as K
+from tensorflow.keras.models import Model
+from tensorflow.keras.callbacks import CSVLogger,ModelCheckpoint
+from tensorflow.keras.applications.vgg19 import VGG19
+from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, Dense, Reshape, Flatten
 from capsulelayers import CapsuleLayer,PrimaryCap
-from keras.regularizers import l1,l2,l1_l2
-import wandb
-
+from tensorflow.keras.regularizers import l1,l2,l1_l2
 
 K.set_image_data_format('channels_last')
 
@@ -94,7 +92,7 @@ def train(data):
     if PRETRAINED_MODEL_PATH != NA:
         model.load_weights(PRETRAINED_MODEL_PATH)
         print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
-    
+ 
     model.compile(optimizer=OPTIMIZER, loss=LOSS)
     
     model.summary()
@@ -288,13 +286,7 @@ def main():
     f.write(parser.prog+'\n')
     f.write(str(args)+'\n\n\n')
     f.close()
-    # 1. Start a W&B run
-    wandb.init(project='ColorCaps', entity='vsiddhi')
 
-    # 2. Save model inputs and hyperparameters
-    config = wandb.config
-    config.learning_rate = 0.01
-    config.optimizer = OPTIMIZER
     if args.train:
         data = load_ntire()
         model = train(data)
