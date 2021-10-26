@@ -13,6 +13,10 @@ from tensorflow.keras.applications.vgg19 import VGG19
 from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, Dense, Reshape, Flatten
 from capsulelayers import CapsuleLayer,PrimaryCap
 from tensorflow.keras.regularizers import l1,l2,l1_l2
+import wandb
+from wandb.keras import WandbCallback
+
+wandb.init(project='ColorCaps', entity='vsiddhi')
 
 K.set_image_data_format('channels_last')
 
@@ -94,7 +98,9 @@ def train(data):
         print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
  
     model.compile(optimizer=OPTIMIZER, loss=LOSS)
-    
+    config = wandb.config
+    config.loss = LOSS
+    config.optimizer = OPTIMIZER
     model.summary()
     with open(MODEL_SUMMARY_PATH, 'w') as f:
         model.summary(print_fn=lambda x: f.write(x+'\n'))
@@ -107,7 +113,7 @@ def train(data):
 		batch_size=BATCH_SIZE,
 		shuffle=True,
 		#validation_data=(x_test_gray,x_test_color),
-		callbacks=[log,checkpoint])
+		callbacks=[log,checkpoint,WandbCallback()])
     return model
 
 
@@ -169,74 +175,6 @@ def predict():
             num_files += 1
     return num_files
 
-'''
-def predict():
-    # for patch based approach
-    patch_size = 9
-    stride = 9
-    
-    input_shape = (patch_size,patch_size,3)
-    model_L = build_model(input_shape)
-    model_a = build_model(input_shape)
-    model_b = build_model(input_shape)
-    model_L.load_weights('runs/23/weights-03.h5')
-    model_a.load_weights('runs/24/weights-03.h5')
-    model_b.load_weights('runs/25/weights-03.h5')
-
-    num_files = 0
-    dataset_root = '/home/go/work/research/colorization/data/Validation_gray'
-    for root,dirs,files in os.walk(os.path.join(dataset_root)):
-        for f in files:
-            # ignore files expect png files
-            if not f.endswith('png'):
-                continue
-            gray_image = cv2.imread(os.path.join(root,f))
-            shp = gray_image.shape
-            dtype = gray_image.dtype
-            # padding to align original size sliding with PATCH_SIZExPATCH_SIZE
-            # height
-            pad_height = 0 if shp[0] % patch_size == 0 else ((shp[0] / patch_size + 1) * patch_size) - shp[0]
-            # width
-            pad_width = 0 if shp[1] % patch_size == 0 else ((shp[1] / patch_size + 1) * patch_size) - shp[1]
-
-            gray_image = np.pad(gray_image, ((0,pad_height),(0,pad_width),(0,0)), 'constant')
-            new_shp = gray_image.shape
-
-            gray_patch_all = []
-            for y in xrange(0, new_shp[0], stride):
-                for x in xrange(0, new_shp[1], stride):
-                    gray_patch = gray_image[y:y+patch_size,x:x+patch_size,:]
-                    gray_patch = gray_patch.astype('float32') / 255.
-                    gray_patch_all.append(gray_patch)
-            # prediction
-            print 'Predicting..'
-            color_patch_all_L = model_L.predict([gray_patch_all])
-            color_patch_all_a = model_a.predict([gray_patch_all])
-            color_patch_all_b = model_b.predict([gray_patch_all])
-            print 'Predicted.'
-            # reconstruction
-            ind = 0
-            color_data_L = np.zeros(new_shp, dtype=dtype)
-            color_data_a = np.zeros(new_shp, dtype=dtype)
-            color_data_b = np.zeros(new_shp, dtype=dtype)
-            color_data = np.zeros(shp, dtype=dtype)
-            for y in xrange(0, new_shp[0], stride):
-                for x in xrange(0, new_shp[1], stride):
-                    color_data_L[y:y+patch_size,x:x+patch_size,:] = (color_patch_all_L[ind] * 255.).astype(dtype)
-                    color_data_a[y:y+patch_size,x:x+patch_size,:] = (color_patch_all_a[ind] * 255.).astype(dtype)
-                    color_data_b[y:y+patch_size,x:x+patch_size,:] = (color_patch_all_b[ind] * 255.).astype(dtype)
-                    ind += 1
-            color_data_L = color_data_L[0:shp[0],0:shp[1],:]
-            color_data_a = color_data_a[0:shp[0],0:shp[1],:]
-            color_data_b = color_data_b[0:shp[0],0:shp[1],:]
-            color_data[:,:,0] = color_data_L[:,:,0]
-            color_data[:,:,1] = color_data_a[:,:,0]
-            color_data[:,:,2] = color_data_b[:,:,0]
-            color_data = cv2.cvtColor(color_data, cv2.COLOR_LAB2BGR)
-            cv2.imwrite(os.path.join(OUT_PATH,f), color_data)
-            num_files += 1
-    return num_files
-'''
 
 def main():
     global RUN,ROUTINGS,N_CLASS,OPTIMIZER,LOSS,EPOCHS,BATCH_SIZE,DATASET,DATA_PATH,PRETRAINED_MODEL_PATH,RUN_PATH,MODEL_PATH,MODEL_SUMMARY_PATH,OUT_PATH,LOG_PATH
