@@ -16,7 +16,7 @@ from tensorflow.keras.regularizers import l1,l2,l1_l2
 import wandb
 from wandb.keras import WandbCallback
 
-wandb.init(project='ColorCaps', entity='vsiddhi')
+wandb.init(project='ColorCaps', entity='capsnetproject')
 
 K.set_image_data_format('channels_last')
 
