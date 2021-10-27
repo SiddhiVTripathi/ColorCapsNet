@@ -5,6 +5,8 @@ import argparse
 import timeit
 import cv2
 import numpy as np
+import tensorflow as tf
+import tensorflow
 from scipy.io import loadmat,savemat
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
@@ -13,6 +15,7 @@ from tensorflow.keras.applications.vgg19 import VGG19
 from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activation, Dense, Reshape, Flatten
 from capsulelayers import CapsuleLayer,PrimaryCap
 from tensorflow.keras.regularizers import l1,l2,l1_l2
+import tensorflow_datasets as tfds
 import wandb
 from wandb.keras import WandbCallback
 
@@ -51,7 +54,11 @@ def load_ntire():
     x_color = data['arr_1']
     x_gray = x_gray.astype('float32') / 255.
     x_color = x_color.astype('float32') / 255.
-    return (x_gray,x_color)
+    x_gray = [el for el in tf.data.Dataset.from_tensors(data['arr_0'])][0]
+    x_color = [el for el in tf.data.Dataset.from_tensors(data['arr_1'])][0]
+    train_dataset = tf.data.Dataset.from_tensor_slices((x_gray, x_color))
+    train_dataset = train_dataset.shuffle(100).batch(BATCH_SIZE)
+    return train_dataset.x_gray.shape
 
 def build_model(input_shape):
     # encoder
@@ -90,9 +97,8 @@ def build_model(input_shape):
 
     return model
 
-def train(data):
-    (x_gray,x_color) = data
-    model = build_model(x_color.shape[1:])
+def train(data,sh):
+    model = build_model(sh)
     if PRETRAINED_MODEL_PATH != NA:
         model.load_weights(PRETRAINED_MODEL_PATH)
         print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
@@ -108,7 +114,7 @@ def train(data):
 
     checkpoint = ModelCheckpoint('runs/'+str(RUN)+'/weights-{epoch:02d}.h5', monitor='loss', save_best_only=True, save_weights_only=True, verbose=1)
 
-    model.fit(x_gray, x_color,
+    model.fit(data,
 		epochs=EPOCHS,
 		batch_size=BATCH_SIZE,
 		shuffle=True,
@@ -226,8 +232,8 @@ def main():
     f.close()
 
     if args.train:
-        data = load_ntire()
-        model = train(data)
+        data,sh = load_ntire()
+        model = train(data,sh)
         if args.save:
             model.save_weights(MODEL_PATH)
     elif args.predict:
