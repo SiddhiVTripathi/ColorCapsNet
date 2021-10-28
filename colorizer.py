@@ -57,7 +57,7 @@ def load_ntire():
     x_gray = [el for el in tf.data.Dataset.from_tensors(data['arr_0'])][0]
     x_color = [el for el in tf.data.Dataset.from_tensors(data['arr_1'])][0]
     train_dataset = tf.data.Dataset.from_tensor_slices((x_gray, x_color))
-    train_dataset = train_dataset.shuffle(100).batch(BATCH_SIZE)
+    train_dataset = train_dataset.shuffle(32).batch(BATCH_SIZE)
     return train_dataset.x_gray.shape
 
 def build_model(input_shape):
@@ -138,9 +138,7 @@ def predict():
         print('Loaded the model {0}.'.format(MODEL_PATH))
 
     num_files = 0
-    #dataset_root = '/home/go/work/research/colorization/data/Train_gray'
-    #dataset_root = '/home/go/work/research/colorization/data/Validation_gray'
-    dataset_root = '/home/go/work/research/colorization/data/Test_gray'
+
     for root,dirs,files in os.walk(os.path.join(dataset_root)):
         for f in files:
             # ignore files expect png files
