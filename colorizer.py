@@ -54,11 +54,12 @@ def load_ntire():
     x_color = data['arr_1']
     x_gray = x_gray.astype('float32') / 255.
     x_color = x_color.astype('float32') / 255.
-    x_gray = [el for el in tf.data.Dataset.from_tensors(data['arr_0'])][0]
-    x_color = [el for el in tf.data.Dataset.from_tensors(data['arr_1'])][0]
-    train_dataset = tf.data.Dataset.from_tensor_slices((x_gray, x_color))
-    train_dataset = train_dataset.shuffle(32).batch(BATCH_SIZE)
-    return train_dataset,x_gray.shape
+    # x_gray = [el for el in tf.data.Dataset.from_tensors(data['arr_0'])][0]
+    # x_color = [el for el in tf.data.Dataset.from_tensors(data['arr_1'])][0]
+    # train_dataset = tf.data.Dataset.from_tensor_slices((x_gray, x_color))
+    # train_dataset = train_dataset.shuffle(32).batch(BATCH_SIZE)
+    # return train_dataset,x_gray.shape
+    return x_gray,x_color
 
 def build_model(input_shape):
     # encoder
@@ -97,8 +98,8 @@ def build_model(input_shape):
 
     return model
 
-def train(data,sh):
-    model = build_model(sh)
+def train(data):
+    model = build_model(data[0].shape)
     if PRETRAINED_MODEL_PATH != NA:
         model.load_weights(PRETRAINED_MODEL_PATH)
         print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
@@ -230,8 +231,8 @@ def main():
     f.close()
 
     if args.train:
-        data,sh = load_ntire()
-        model = train(data,sh)
+        data = load_ntire()
+        model = train(datah)
         if args.save:
             model.save_weights(MODEL_PATH)
     elif args.predict:
