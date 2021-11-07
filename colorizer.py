@@ -232,7 +232,7 @@ def main():
 
     if args.train:
         data = load_ntire()
-        model = train(datah)
+        model = train(data)
         if args.save:
             model.save_weights(MODEL_PATH)
     elif args.predict:
