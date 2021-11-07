@@ -99,7 +99,7 @@ def build_model(input_shape):
     return model
 
 def train(data):
-    model = build_model(data[0].shape)
+    model = build_model(data[1].shape[1:])
     if PRETRAINED_MODEL_PATH != NA:
         model.load_weights(PRETRAINED_MODEL_PATH)
         print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
