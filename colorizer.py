@@ -58,7 +58,7 @@ def load_ntire():
     x_color = [el for el in tf.data.Dataset.from_tensors(data['arr_1'])][0]
     train_dataset = tf.data.Dataset.from_tensor_slices((x_gray, x_color))
     train_dataset = train_dataset.shuffle(32).batch(BATCH_SIZE)
-    return train_dataset.x_gray.shape
+    return train_dataset,x_gray.shape
 
 def build_model(input_shape):
     # encoder
