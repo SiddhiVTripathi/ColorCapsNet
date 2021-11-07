@@ -115,7 +115,7 @@ def train(data):
 
     checkpoint = ModelCheckpoint('runs/'+str(RUN)+'/weights-{epoch:02d}.h5', monitor='loss', save_best_only=True, save_weights_only=True, verbose=1)
 
-    model.fit(data,
+    model.fit(data[0],data[1],
 		epochs=EPOCHS,
 		batch_size=BATCH_SIZE,
 		shuffle=True,
