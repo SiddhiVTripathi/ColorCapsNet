@@ -166,8 +166,11 @@ def predict():
                     gray_patch = gray_patch.astype('float32') / 255.
                     gray_patch_all.append(gray_patch)
             # prediction
+
             print('Predicting..')
-            color_patch_all = model.predict([gray_patch_all])
+            color_patch_all = list()
+            for gray_patch_all_but_at_one in gray_patch_all:
+              color_patch_all.append(model.predict_on_batch(np.expand_dims(gray_patch_all_but_at_one,axis=0)))
             print('Predicted.')
             # reconstruction
             ind = 0
