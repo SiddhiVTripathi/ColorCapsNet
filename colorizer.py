@@ -148,7 +148,6 @@ def predict():
                 continue
             gray_image = cv2.imread(os.path.join(root,f))
             shp = gray_image.shape
-            print((shp))
             dtype = gray_image.dtype
             # padding to align original size sliding with PATCH_SIZExPATCH_SIZE
              # height
@@ -158,7 +157,6 @@ def predict():
 
             gray_image = np.pad(gray_image, ((0,int(pad_height)),(0,int(pad_width)),(0,0)), 'constant')
             new_shp = gray_image.shape
-            print(new_shp)
             gray_patch_all = []
             for y in range(0, new_shp[0], stride):
                 for x in range(0, new_shp[1], stride):

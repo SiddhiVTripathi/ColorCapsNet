@@ -193,3 +193,23 @@ colorizer.py
 Namespace(train=False, predict=True, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/1/out/weights-03.h5', testpath='validation/', save=True)
 
 
+1
+colorizer.py
+Namespace(train=False, predict=True, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/1/out/weights-03.h5', testpath='validation/', save=True)
+
+
+1
+colorizer.py
+Namespace(train=False, predict=True, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/1/out/weights-03.h5', testpath='validation/', save=True)
+
+
+1
+colorizer.py
+Namespace(batch_size=128, complexity=6, datapath='../data/train_128_128.npz', dataset='ntire', epochs=10, loss='mse', optimizer='adam', predict=True, pretrained_model='runs/1/out/weights-03.h5', routings=1, run=1, save=True, testpath='validation/', train=False)
+
+
+1
+colorizer.py
+Namespace(batch_size=128, complexity=6, datapath='../data/train_128_128.npz', dataset='ntire', epochs=10, loss='mse', optimizer='adam', predict=True, pretrained_model='runs/1/out/weights-03.h5', routings=1, run=1, save=True, testpath='validation/', train=False)
+
+
