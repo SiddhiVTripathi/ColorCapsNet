@@ -141,7 +141,7 @@ def predict():
 
     num_files = 0
 
-    for root,dirs,files in os.walk(os.path.join(dataset_root)):
+    for root,dirs,files in os.walk(os.path.join(TEST_PATH)):
         for f in files:
             # ignore files expect png files
             if not f.endswith('png'):
@@ -153,17 +153,21 @@ def predict():
             # height
             pad_height = 0 if shp[0] % patch_size == 0 else ((shp[0] / patch_size + 1) * patch_size) - shp[0]
             # width
-            pad_width = 0 if shp[1] % patch_size == 0 else ((shp[1] / patch_size + 1) * patch_size) - shp[1]
-
-            gray_image = np.pad(gray_image, ((0,pad_height),(0,pad_width),(0,0)), 'constant')
+            pad_width =  0 if shp[1] % patch_size == 0 else ((shp[1] / patch_size + 1) * patch_size) - shp[1]
+            gray_image = np.pad(gray_image, ((0,int(pad_height)),(0,int(pad_width)),(0,0)), 'constant')
             new_shp = gray_image.shape
-
             gray_patch_all = []
+            count_img = 0
+            count_total_patch = 0  
+            count_patch = 0
             for y in range(0, new_shp[0], stride):
                 for x in range(0, new_shp[1], stride):
                     gray_patch = gray_image[y:y+patch_size,x:x+patch_size,:]
-                    gray_patch = gray_patch.astype('float32') / 255.
+                    gray_patch = gray_patch.astype('float32') / 255
+                    if gray_patch.shape[0:2] != (patch_size,patch_size):
+                        continue
                     gray_patch_all.append(gray_patch)
+                    #print(gray_patch.shape)
             # prediction
             print('Predicting..')
             color_patch_all = model.predict([gray_patch_all])
@@ -177,13 +181,13 @@ def predict():
                     ind += 1
             color_data = color_data[0:shp[0],0:shp[1],:]
             color_data = cv2.cvtColor(color_data, cv2.COLOR_LAB2BGR)
-            cv2.imwrite(os.path.join(OUT_PATH,f), color_data)
+            cv2.imwrite(os.path.join('output/',f), color_data)
             num_files += 1
     return num_files
 
 
 def main():
-    global RUN,ROUTINGS,N_CLASS,OPTIMIZER,LOSS,EPOCHS,BATCH_SIZE,DATASET,DATA_PATH,PRETRAINED_MODEL_PATH,RUN_PATH,MODEL_PATH,MODEL_SUMMARY_PATH,OUT_PATH,LOG_PATH
+    global RUN,ROUTINGS,N_CLASS,OPTIMIZER,LOSS,EPOCHS,BATCH_SIZE,DATASET,DATA_PATH,PRETRAINED_MODEL_PATH,RUN_PATH,MODEL_PATH,MODEL_SUMMARY_PATH,OUT_PATH,LOG_PATH, TEST_PATH
 
     parser = argparse.ArgumentParser(description="Capsule Network based Image Denoiser.")
     parser.add_argument('--train','-tr', action='store_true')
@@ -198,6 +202,7 @@ def main():
     parser.add_argument('--dataset','-ds', default='ntire',type=str)
     parser.add_argument('--datapath','-dp', default='../data/train_128_128.npz',type=str)
     parser.add_argument('--pretrained_model','-lm',default=NA,type=str)
+    parser.add_argument('--testpath',type=str)
     parser.add_argument('--save', action='store_true')
     args = parser.parse_args()
 
@@ -211,6 +216,7 @@ def main():
     DATASET = args.dataset
     DATA_PATH = args.datapath
     PRETRAINED_MODEL_PATH = args.pretrained_model
+    TEST_PATH = args.testpath
 
     RUN_PATH = os.path.join('runs', str(RUN))
     MODEL_PATH = os.path.join(RUN_PATH, 'weights-'+str(EPOCHS)+'.h5')
