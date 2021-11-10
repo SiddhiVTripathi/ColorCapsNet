@@ -168,9 +168,12 @@ def predict():
             # prediction
 
             print('Predicting..')
-            color_patch_all = list()
-            for gray_patch_all_but_at_one in gray_patch_all:
-              color_patch_all.append(model.predict_on_batch(np.expand_dims(gray_patch_all_but_at_one,axis=0)))
+            ## Brute Force ##
+            # color_patch_all = list()
+            # for gray_patch_all_but_at_one in gray_patch_all:
+            #   color_patch_all.append(model.predict_on_batch(np.expand_dims(gray_patch_all_but_at_one,axis=0)))
+            ## changing to numpy array ##
+            color_patch_all = model.predict(np.array(gray_patch_all))
             print('Predicted.')
             # reconstruction
             ind = 0
