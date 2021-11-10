@@ -156,6 +156,7 @@ def predict():
             pad_width =  0 if shp[1] % patch_size == 0 else ((shp[1] / patch_size + 1) * patch_size) - shp[1]
             gray_image = np.pad(gray_image, ((0,int(pad_height)),(0,int(pad_width)),(0,0)), 'constant')
             new_shp = gray_image.shape
+            print("new shape",new_shp)
             gray_patch_all = []
             count_img = 0
             count_total_patch = 0  
@@ -170,7 +171,7 @@ def predict():
                     #print(gray_patch.shape)
             # prediction
             print('Predicting..')
-            color_patch_all = model.predict([gray_patch_all])
+            color_patch_all = model.predict(gray_patch_all)
             print('Predicted.')
             # reconstruction
             ind = 0
