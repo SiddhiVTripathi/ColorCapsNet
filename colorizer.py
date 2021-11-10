@@ -150,28 +150,23 @@ def predict():
             shp = gray_image.shape
             dtype = gray_image.dtype
             # padding to align original size sliding with PATCH_SIZExPATCH_SIZE
-            # height
+             # height
             pad_height = 0 if shp[0] % patch_size == 0 else ((shp[0] / patch_size + 1) * patch_size) - shp[0]
             # width
-            pad_width =  0 if shp[1] % patch_size == 0 else ((shp[1] / patch_size + 1) * patch_size) - shp[1]
-            gray_image = np.pad(gray_image, ((0,int(pad_height)),(0,int(pad_width)),(0,0)), 'constant')
+            pad_width = 0 if shp[1] % patch_size == 0 else ((shp[1] / patch_size + 1) * patch_size) - shp[1]
+
+            gray_image = np.pad(gray_image, ((0,pad_height),(0,pad_width),(0,0)), 'constant')
             new_shp = gray_image.shape
-            print("new shape",new_shp)
+
             gray_patch_all = []
-            count_img = 0
-            count_total_patch = 0  
-            count_patch = 0
             for y in range(0, new_shp[0], stride):
                 for x in range(0, new_shp[1], stride):
                     gray_patch = gray_image[y:y+patch_size,x:x+patch_size,:]
-                    gray_patch = gray_patch.astype('float32') / 255
-                    if gray_patch.shape[0:2] != (patch_size,patch_size):
-                        continue
+                    gray_patch = gray_patch.astype('float32') / 255.
                     gray_patch_all.append(gray_patch)
-                    #print(gray_patch.shape)
             # prediction
             print('Predicting..')
-            color_patch_all = model.predict(gray_patch_all)
+            color_patch_all = model.predict([gray_patch_all])
             print('Predicted.')
             # reconstruction
             ind = 0
