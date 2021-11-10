@@ -16,10 +16,10 @@ from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, Activatio
 from capsulelayers import CapsuleLayer,PrimaryCap
 from tensorflow.keras.regularizers import l1,l2,l1_l2
 import tensorflow_datasets as tfds
-import wandb
-from wandb.keras import WandbCallback
+# import wandb
+# from wandb.keras import WandbCallback
 
-wandb.init(project='ColorCaps', entity='vsiddhi')
+# wandb.init(project='ColorCaps', entity='vsiddhi')
 
 K.set_image_data_format('channels_last')
 
@@ -105,9 +105,9 @@ def train(data):
         print('Pretrained model {0} loaded..'.format(PRETRAINED_MODEL_PATH))
  
     model.compile(optimizer=OPTIMIZER, loss=LOSS)
-    config = wandb.config
-    config.loss = LOSS
-    config.optimizer = OPTIMIZER
+    # config = wandb.config
+    # config.loss = LOSS
+    # config.optimizer = OPTIMIZER
     model.summary()
     with open(MODEL_SUMMARY_PATH, 'w') as f:
         model.summary(print_fn=lambda x: f.write(x+'\n'))
@@ -120,7 +120,8 @@ def train(data):
 		batch_size=BATCH_SIZE,
 		shuffle=True,
 		#validation_data=(x_test_gray,x_test_color),
-		callbacks=[log,checkpoint,WandbCallback()])
+		# callbacks=[log,checkpoint,WandbCallback()])
+        callbacks=[log,checkpoint])
     return model
 
 
