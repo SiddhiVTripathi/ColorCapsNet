@@ -213,3 +213,13 @@ colorizer.py
 Namespace(batch_size=128, complexity=6, datapath='../data/train_128_128.npz', dataset='ntire', epochs=10, loss='mse', optimizer='adam', predict=True, pretrained_model='runs/1/out/weights-03.h5', routings=1, run=1, save=True, testpath='validation/', train=False)
 
 
+1
+colorizer.py
+Namespace(train=True, predict=False, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=6, batch_size=8, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
+1
+colorizer.py
+Namespace(train=True, predict=False, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=6, batch_size=8, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
