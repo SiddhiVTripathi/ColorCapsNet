@@ -55,11 +55,6 @@ def load_ntire():
     x_color = data['arr_1']
     x_gray = x_gray.astype('float32') / 255.
     x_color = x_color.astype('float32') / 255.
-    # x_gray = [el for el in tf.data.Dataset.from_tensors(data['arr_0'])][0]
-    # x_color = [el for el in tf.data.Dataset.from_tensors(data['arr_1'])][0]
-    # train_dataset = tf.data.Dataset.from_tensor_slices((x_gray, x_color))
-    # train_dataset = train_dataset.shuffle(32).batch(BATCH_SIZE)
-    # return train_dataset,x_gray.shape
     return x_gray,x_color
 
 def build_model(input_shape):
@@ -120,8 +115,6 @@ def train(data):
 		epochs=EPOCHS,
 		batch_size=BATCH_SIZE,
 		shuffle=True,
-		#validation_data=(x_test_gray,x_test_color),
-		# callbacks=[log,checkpoint,WandbCallback()])
         callbacks=[log,checkpoint])
     return model
 
