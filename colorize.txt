@@ -1,0 +1,1 @@
+python colorizer.py --complexity 6 --epochs 10 --routings 1 --save --predict --testpath validation/ --run 3 --pretrained_model runs/4/weights-10.h5

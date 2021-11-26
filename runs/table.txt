@@ -215,11 +215,111 @@ Namespace(batch_size=128, complexity=6, datapath='../data/train_128_128.npz', da
 
 1
 colorizer.py
-Namespace(train=True, predict=False, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=6, batch_size=8, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+Namespace(batch_size=8, complexity=6, datapath='./train_9_9_4.npz', dataset='ntire', epochs=6, loss='mse', optimizer='adam', predict=False, pretrained_model='not available', routings=1, run=1, save=True, testpath=None, train=True)
 
 
 1
 colorizer.py
-Namespace(train=True, predict=False, run=1, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=6, batch_size=8, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+Namespace(batch_size=8, complexity=6, datapath='./train_9_9_4.npz', dataset='ntire', epochs=6, loss='mse', optimizer='adam', predict=False, pretrained_model='not available', routings=1, run=1, save=True, testpath=None, train=True)
+
+
+3
+colorizer.py
+Namespace(batch_size=128, complexity=6, datapath='./train_9_9_4.npz', dataset='ntire', epochs=10, loss='mse', optimizer='adam', predict=False, pretrained_model='not available', routings=1, run=3, save=True, testpath=None, train=True)
+
+
+2
+colorizer.py
+Namespace(batch_size=128, complexity=6, datapath='./train_9_9_4.npz', dataset='ntire', epochs=10, loss='mse', optimizer='adam', predict=False, pretrained_model='not available', routings=1, run=2, save=True, testpath=None, train=True)
+
+
+2
+colorizer.py
+Namespace(train=True, predict=False, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
+2
+colorizer.py
+Namespace(train=True, predict=False, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
+2
+colorizer.py
+Namespace(train=True, predict=False, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
+2
+colorizer.py
+Namespace(train=True, predict=False, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
+2
+colorizer.py
+Namespace(train=True, predict=False, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='not available', testpath=None, save=True)
+
+
+2
+colorizer.py
+Namespace(train=False, predict=True, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='not available', testpath='Validation_gray/', save=True)
+
+
+2
+colorizer.py
+Namespace(train=False, predict=True, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='not available', testpath='validation/', save=True)
+
+
+2
+colorizer.py
+Namespace(train=False, predict=True, run=2, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='not available', testpath='validation/', save=True)
+
+
+3
+colorizer.py
+Namespace(train=True, predict=False, run=3, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='runs/2/weights-10.h5', testpath=None, save=True)
+
+
+4
+colorizer.py
+Namespace(train=True, predict=False, run=4, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='./train_9_9_4.npz', pretrained_model='runs/3/weights-10.h5', testpath=None, save=True)
+
+
+4
+colorizer.py
+Namespace(train=False, predict=True, run=4, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='not available', testpath='validation/', save=True)
+
+
+4
+colorizer.py
+Namespace(train=False, predict=True, run=4, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='not available', testpath='validation/', save=True)
+
+
+4
+colorizer.py
+Namespace(train=False, predict=True, run=4, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/4/out/weights-10.h5', testpath='validation/', save=True)
+
+
+4
+colorizer.py
+Namespace(train=False, predict=True, run=4, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/4/weights-10.h5', testpath='validation/', save=True)
+
+
+3
+colorizer.py
+Namespace(batch_size=128, complexity=6, datapath='../data/train_128_128.npz', dataset='ntire', epochs=10, loss='mse', optimizer='adam', predict=True, pretrained_model='runs/4/weights-10.h5', routings=1, run=3, save=True, testpath='validation/', train=False)
+
+
+3
+colorizer.py
+Namespace(train=False, predict=True, run=3, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/4/weights-10.h5', testpath='validation/', save=True)
+
+
+3
+colorizer.py
+Namespace(train=False, predict=True, run=3, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/4/weights-10.h5', testpath='validation/', save=True)
+
+
+3
+colorizer.py
+Namespace(train=False, predict=True, run=3, routings=1, complexity=6, optimizer='adam', loss='mse', epochs=10, batch_size=128, dataset='ntire', datapath='../data/train_128_128.npz', pretrained_model='runs/4/weights-10.h5', testpath='validation/', save=True)
 
 

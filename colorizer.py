@@ -17,6 +17,10 @@ from capsulelayers import CapsuleLayer,PrimaryCap
 from tensorflow.keras.regularizers import l1,l2,l1_l2
 import tensorflow_datasets as tfds
 
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+assert len(physical_devices) > 0, "Not enough GPU hardware devices available"
+config = tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
 # import wandb
 # from wandb.keras import WandbCallback
 
@@ -144,7 +148,7 @@ def predict():
             shp = gray_image.shape
             dtype = gray_image.dtype
             # padding to align original size sliding with PATCH_SIZExPATCH_SIZE
-             # height
+            # height
             pad_height = 0 if shp[0] % patch_size == 0 else patch_size-(shp[0]%patch_size)
             # width
             pad_width = 0 if shp[1] % patch_size == 0 else patch_size-(shp[1]%patch_size)
@@ -161,9 +165,7 @@ def predict():
 
             print('Predicting..')
             ## Brute Force ##
-            # color_patch_all = list()
-            # for gray_patch_all_but_at_one in gray_patch_all:
-            #   color_patch_all.append(model.predict_on_batch(np.expand_dims(gray_patch_all_but_at_one,axis=0)))
+
             ## changing to numpy array ##
             color_patch_all = model.predict(np.array(gray_patch_all))
             print('Predicted.')
